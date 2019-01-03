@@ -2,13 +2,14 @@ package game;
 
 import java.util.Scanner;
 
-public class Game {
+    public abstract class Game {
 
-    int gameMode;
+    protected int gameMode;
     Scanner sc = new Scanner(System.in);
 
 
     public void choiceMode() {
+
 
         System.out.println("Veuillez choisir un mode de jeu!");
         System.out.println("1 - Attaquant");
@@ -34,15 +35,11 @@ public class Game {
 
     }
 
-    public void challengerMode() {
+    protected abstract void challengerMode();
 
-    }
 
-    public void defenderMode() {
+    protected abstract void defenderMode();
 
-    }
 
-    public void versusMode() {
-
-    }
+    protected abstract void versusMode();
 }
