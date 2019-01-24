@@ -2,10 +2,19 @@ package game;
 
 import java.util.Scanner;
 
-    public abstract class Game {
+public abstract class Game {
+
+    public int getGameMode() {
+        return gameMode;
+    }
+
+    public void setGameMode(int gameMode) {
+        this.gameMode = gameMode;
+    }
 
     protected int gameMode;
     Scanner sc = new Scanner(System.in);
+
 
 
     public void choiceMode() {

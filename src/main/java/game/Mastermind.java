@@ -1,6 +1,6 @@
 package game;
 
-public class Mastermind extends Game {
+public  class   Mastermind extends Game {
 
 
     @Override
@@ -17,4 +17,6 @@ public class Mastermind extends Game {
     protected void versusMode() {
 
     }
+
+
 }

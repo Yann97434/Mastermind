@@ -37,7 +37,8 @@ public class Menu {
                 default:
                     System.out.println("Vous n'avez pas choisi une proposition de la liste!!!");
             }
-        } catch (Exception e) {displayMenu();}
+        } catch (Exception e){ System.out.println("Une exception à été attrapé!"); displayMenu(); }
+
 
     }
 
@@ -54,10 +55,10 @@ public class Menu {
 
             switch (gameSelection) {
                 case 1:
-                    game = new Mastermind();
+                    game = new MoreOrLess();
                     break;
                 case 2:
-                    game = new MoreOrLess();
+                    game = new Mastermind();
                     break;
                 default:
                     System.out.println("Vous n'avez pas choisi une proposition de la liste");
@@ -73,7 +74,7 @@ public class Menu {
     }
 
     public void replay() {
-
+        /** A mettre en booléen */
     }
 
     public void quit() {
