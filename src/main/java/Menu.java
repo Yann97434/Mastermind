@@ -1,6 +1,10 @@
 import game.Game;
+/**import game.Mastermind;*/
 import game.Mastermind;
 import game.MoreOrLess;
+import org.apache.log4j.Logger;
+
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Menu {
@@ -8,16 +12,21 @@ public class Menu {
     private int menuSelection;
     private int gameSelection;
     Scanner sc = new Scanner(System.in);
+    private int mode;
+    final static Logger log = Logger.getLogger(Menu.class);
+
+    /**
+     * Méthode permettant d'afficher le menu
+     */
 
     public void displayMenu() {
 
         try {
 
-            System.out.println("Choix menu");
-            System.out.println("1 - Selectionner un jeux");
-            System.out.println("2 - Jouer");
-            System.out.println("3 - Rejouer");
-            System.out.println("4 - Quitter");
+            log.info("Choix menu");
+            log.info("1 - Selectionner un jeux");
+            log.info("2 - Rejouer");
+            log.info("3 - Quitter");
 
             menuSelection = sc.nextInt();
 
@@ -26,58 +35,67 @@ public class Menu {
                     choiceGame();
                     break;
                 case 2:
-                    play();
-                    break;
-                case 3:
                     replay();
                     break;
-                case 4:
+                case 3:
                     quit();
                     break;
                 default:
-                    System.out.println("Vous n'avez pas choisi une proposition de la liste!!!");
+                    log.info("Vous n'avez pas choisi une proposition de la liste!!!");
             }
-        } catch (Exception e){ System.out.println("Une exception à été attrapé!"); displayMenu(); }
+        } catch (Exception e){ log.info("Une exception à été attrapé!"); displayMenu(); }
 
 
     }
 
-    public void choiceGame() {
+    /**
+     * Méthode permettant de choisir le jeu
+     */
+
+    public void choiceGame() throws IOException {
 
         Game game = null;
         try {
 
-            System.out.println("Veuillez choisir un jeu!");
-            System.out.println("1 - +/-");
-            System.out.println("2 - Mastermind");
+            log.info("Veuillez choisir un jeu!");
+            log.info("1 - +/-");
+            log.info("2 - Mastermind");
 
             gameSelection = sc.nextInt();
 
             switch (gameSelection) {
                 case 1:
                     game = new MoreOrLess();
+                    log.info("Vous avez Choisi le MoreOrLess!");
                     break;
                 case 2:
                     game = new Mastermind();
+                    log.info("Vous avez choisi le Mastermind!");
                     break;
                 default:
-                    System.out.println("Vous n'avez pas choisi une proposition de la liste");
+                    log.info("Vous n'avez pas choisi une proposition de la liste");
             }
         } catch (Exception e) {choiceGame();}
 
         if (game != null)
-            game.choiceMode();
-    }
-
-    public void play() {
+            mode = game.choiceMode();
+        displayMenu();
 
     }
+
 
     public void replay() {
-        /** A mettre en booléen */
+        MoreOrLess game = new MoreOrLess();
+        if (mode == 1) {
+            game.challengerMode();
+        } else if (mode == 2) {
+            game.defenderMode();
+        } else {
+            game.versusMode();
+        }
     }
 
     public void quit() {
-
+        log.info("Merci d'avoir joué!!!");
     }
 }

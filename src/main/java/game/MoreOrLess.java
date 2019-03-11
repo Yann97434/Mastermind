@@ -1,86 +1,95 @@
 package game;
 
 
+import org.apache.log4j.Logger;
+
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class MoreOrLess extends Game {
 
-    /**MoreOrLess gameReplay = new MoreOrLess();*/
 
-    private MoreOrLessCombination combination = new MoreOrLessCombination();
-    protected ArrayList<Integer> combinationAttacker;
-    protected ArrayList<Integer> combinationDefender;
-    private int nbTry;
-    private String replay;
-    Scanner sc = new Scanner(System.in);
+    private MoreOrLessCombination combinationMoreOrLess = new MoreOrLessCombination();
+    final static Logger log = Logger.getLogger(MoreOrLess.class);
 
+    /**
+     * Méthode challenger Mode of MoreOrLess Game
+     */
     @Override
-    protected void challengerMode() {
+    public int challengerMode() {
 
-        System.out.println("Vous avez choisi le mode Challenger !");
+        log.info("Bienvenue dans le mode Challenger de MoreOrLess!");
         gameMode = 1;
-        combination.generateCombination();
-        nbTry = 10;
+        combinationMoreOrLess.generateCombination();
 
         for (int i = 0; i < 5 ; i++) {
             nbTry = nbTry - 1;
-            combination.writeCombination();
-            if (combination.analyseCombination() == false) {
-                System.out.println("Veuillez réessayer, Il vous reste " + nbTry + " Essais!");
+            combinationMoreOrLess.writeCombination();
+            if (combinationMoreOrLess.analyseCombination(gameMode) == false) {
+                log.info("Veuillez réessayer, Il vous reste " + nbTry + " Essais!");
             } else if (nbTry == 0) {
-                System.out.println("Dommage vous avez perdu!!! la réponse est : ");
-                combination.displayCombination();
+                log.info("Dommage vous avez perdu!!! la réponse est : ");
+                combinationMoreOrLess.displayCombination();
             } else {
-                System.out.println("Félicitations vous avez trouvé la bonne combinaison!!!");
+                log.info("Félicitations vous avez trouvé la bonne combinaison!!!");
                 break;
             }
         }
-
-        /**System.out.println("Voulez vous rejouer? oui ou non?");
-        replay = sc.next();
-        if (replay == "yes") {
-            gameReplay.challengerMode();*/
+        return 1;
     }
 
 
+    /**
+     * Méthode Defender Mode of MoreOrLess Game
+     */
 
     @Override
-    protected void defenderMode() {
+    public int defenderMode() {
 
-        System.out.println("Vous avez choisi le mode Defender !");
+        log.info("Bienvenue dans le mode Defender de MoreOrLess!");
         gameMode = 2;
-        combination.writeCombination();
-        combination.computerCombination();
-        nbTry = 10;
+        combinationMoreOrLess.writeCombination();
+        combinationMoreOrLess.computerCombination();
         for (int i = 0; i < 10 ; i++) {
             nbTry = nbTry - 1;
-            combination.analyseCombination();
-            combination.searchResult();
-            if (combination.analyseCombination() == true) {
-                System.out.println("Félicitations vous avez trouvé la bonne combinaison!!!");
+            combinationMoreOrLess.analyseCombination(gameMode);
+            combinationMoreOrLess.searchResult();
+            if (combinationMoreOrLess.analyseCombination(gameMode) == true) {
+                log.info("Félicitations vous avez trouvé la bonne combinaison!!!");
                 break;
             } else {
-                System.out.println("Il vous reste " + nbTry + " essais!");
+                log.info("Il vous reste " + nbTry + " essais!");
             }
         }
-        /**System.out.println("Voulez vous rejouer? oui ou non?");
-        replay = sc.next();
-        if (replay == "oui") {
-            gameReplay.defenderMode();
-        }*/
+        return 2;
     }
 
+    /**
+     * Méthode Versus Mode of MoreOrLess Game
+     */
+
     @Override
-    protected void versusMode() {
+    public int versusMode() {
 
+        int turn = 0;
         gameMode = 3;
-        combinationAttacker = new ArrayList<>();
-        combinationDefender = new ArrayList<>();
-
-
-        System.out.println("Vous avez choisi le mode Duel !");
-
+        combinationMoreOrLess.combinationAttacker = new ArrayList<>();
+        combinationMoreOrLess.combinationDefender = new ArrayList<>();
+        log.info("Bienvenue dans le mode Duel de MoreOrLess!");
+        combinationMoreOrLess.generateCombination();
+        for (int i = 0; i < combinationMoreOrLess.combinationRandom.size(); i++) {
+            combinationMoreOrLess.combinationDefender.add(combinationMoreOrLess.combinationRandom.get(i));
+        }
+        log.info("Veuillez entrer votre combinaison secrète!");
+        combinationMoreOrLess.writeCombination();
+        for (int i = 0; i < combinationMoreOrLess.combinationList.size(); i++) {
+            combinationMoreOrLess.combinationAttacker.add(combinationMoreOrLess.combinationList.get(i));
+        }
+        do {
+            log.info("A votre tour de jouer");
+            combinationMoreOrLess.writeCombination();
+            }
+        while (combinationMoreOrLess.combinationCompare() == false) ;
+        return 3;
     }
 
 
