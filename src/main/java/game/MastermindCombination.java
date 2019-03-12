@@ -29,6 +29,8 @@ public class MastermindCombination extends Combination {
         listSize = Integer.parseInt(properties.getListSize());
     }
 
+    protected List<List<Integer>> val;
+
     public List<int[]> listCombination() throws FileNotFoundException {
 
         /**ArrayList<Integer> digitCombination = generateDigitCombination();*/
@@ -120,8 +122,8 @@ public class MastermindCombination extends Combination {
 
         combinationPossible = new ArrayList<int[]>();
         for (int i = 0; i < allCombination.size(); i++) {
-            for (int j = 0; j < combinationExtract.size(); j++) {
-                if (combinationExtract.get(i).equals(allCombination.get(i))) {
+            for (int j = 0; j < allCombination.size(); j++) {
+                if (allCombination.get(i).equals(val.get(i))) {
                     combinationPossible.add(allCombination.get(i));
                     log.info("combinaison ajoutée " + Arrays.toString(combinationPossible.get(i)));
                 } else {
@@ -137,7 +139,7 @@ public class MastermindCombination extends Combination {
     }
 
     public List<List<Integer>> extract1(List<Integer> lst) {
-        List<List<Integer>> val = new ArrayList<>();
+        val = new ArrayList<>();
 
         for (int i1 = 0; i1 < lst.size(); i1++) {
 
@@ -150,10 +152,10 @@ public class MastermindCombination extends Combination {
     }
 
     public List<List<Integer>> extract2(List<Integer> lst) {
-        List<List<Integer>> val = new ArrayList<>();
+        val = new ArrayList<>();
 
         for (int i1 = 0; i1 < lst.size(); i1++) {
-            for (int i2 = i1 + 1; i2 < lst.size(); i2++) {
+            for (int i2 = i1 ; i2 < lst.size(); i2++) {
 
                 List<Integer> add = new ArrayList<>();
                 add.add(lst.get(i1));
@@ -166,11 +168,11 @@ public class MastermindCombination extends Combination {
     }
 
     public List<List<Integer>> extract3(List<Integer> lst) {
-        List<List<Integer>> val = new ArrayList<>();
+        val = new ArrayList<>();
 
         for (int i1 = 0; i1 < lst.size(); i1++) {
             for (int i2 = i1 + 1; i2 < lst.size(); i2++) {
-                for (int i3 = i2 + 1; i3 < lst.size(); i3++) {
+                for (int i3 = i2 ; i3 < lst.size(); i3++) {
                     List<Integer> add = new ArrayList<>();
                     add.add(lst.get(i1));
                     add.add(lst.get(i2));
@@ -184,12 +186,12 @@ public class MastermindCombination extends Combination {
     }
 
     public List<List<Integer>> extract4(List<Integer> lst) {
-        List<List<Integer>> val = new ArrayList<>();
+        val = new ArrayList<>();
 
         for (int i1 = 0; i1 < lst.size(); i1++) {
             for (int i2 = i1 + 1; i2 < lst.size(); i2++) {
                 for (int i3 = i2 + 1; i3 < lst.size(); i3++) {
-                    for (int i4 = i3 +1; i4 < lst.size() ; i4++ ) {
+                    for (int i4 = i3 ; i4 < lst.size() ; i4++ ) {
                         List<Integer> add = new ArrayList<>();
                         add.add(lst.get(i1));
                         add.add(lst.get(i2));
@@ -205,13 +207,13 @@ public class MastermindCombination extends Combination {
     }
 
     public List<List<Integer>> extract5(List<Integer> lst) {
-        List<List<Integer>> val = new ArrayList<>();
+        val = new ArrayList<>();
 
         for (int i1 = 0; i1 < lst.size(); i1++) {
             for (int i2 = i1 + 1; i2 < lst.size(); i2++) {
                 for (int i3 = i2 + 1; i3 < lst.size(); i3++) {
                     for (int i4 = i3 +1; i4 < lst.size() ; i4++ ) {
-                        for (int i5 = i4 + 1; i5 < lst.size(); i5++) {
+                        for (int i5 = i4 ; i5 < lst.size(); i5++) {
                             List<Integer> add = new ArrayList<>();
                             add.add(lst.get(i1));
                             add.add(lst.get(i2));
@@ -228,14 +230,14 @@ public class MastermindCombination extends Combination {
     }
 
     public List<List<Integer>> extract6(List<Integer> lst) {
-        List<List<Integer>> val = new ArrayList<>();
+        val = new ArrayList<>();
 
         for (int i1 = 0; i1 < lst.size(); i1++) {
             for (int i2 = i1 + 1; i2 < lst.size(); i2++) {
                 for (int i3 = i2 + 1; i3 < lst.size(); i3++) {
                     for (int i4 = i3 +1; i4 < lst.size() ; i4++ ) {
                         for (int i5 = i4 + 1; i5 < lst.size(); i5++) {
-                            for (int i6 = i5 + 1; i6 < lst.size(); i6++) {
+                            for (int i6 = i5 ; i6 < lst.size(); i6++) {
                                 List<Integer> add = new ArrayList<>();
                                 add.add(lst.get(i1));
                                 add.add(lst.get(i2));
@@ -254,7 +256,7 @@ public class MastermindCombination extends Combination {
     }
 
     public List<List<Integer>> extract7(List<Integer> lst) {
-        List<List<Integer>> val = new ArrayList<>();
+        val = new ArrayList<>();
 
         for (int i1 = 0; i1 < lst.size(); i1++) {
             for (int i2 = i1 + 1; i2 < lst.size(); i2++) {
@@ -262,7 +264,7 @@ public class MastermindCombination extends Combination {
                     for (int i4 = i3 +1; i4 < lst.size() ; i4++ ) {
                         for (int i5 = i4 + 1; i5 < lst.size(); i5++) {
                             for (int i6 = i5 + 1; i6 < lst.size(); i6++) {
-                                for (int i7 = i6 + 1; i7 < lst.size(); i7++) {
+                                for (int i7 = i6 ; i7 < lst.size(); i7++) {
                                     List<Integer> add = new ArrayList<>();
                                     add.add(lst.get(i1));
                                     add.add(lst.get(i2));
@@ -283,7 +285,7 @@ public class MastermindCombination extends Combination {
     }
 
     public List<List<Integer>> extract8(List<Integer> lst) {
-        List<List<Integer>> val = new ArrayList<>();
+        val = new ArrayList<>();
 
         for (int i1 = 0; i1 < lst.size(); i1++) {
             for (int i2 = i1 + 1; i2 < lst.size(); i2++) {
@@ -292,7 +294,7 @@ public class MastermindCombination extends Combination {
                         for (int i5 = i4 + 1; i5 < lst.size(); i5++) {
                             for (int i6 = i5 + 1; i6 < lst.size(); i6++) {
                                 for (int i7 = i6 + 1; i7 < lst.size(); i7++) {
-                                    for (int i8 = i7 + 1; i8 <lst.size(); i8++) {
+                                    for (int i8 = i7 ; i8 <lst.size(); i8++) {
                                         List<Integer> add = new ArrayList<>();
                                         add.add(lst.get(i1));
                                         add.add(lst.get(i2));
@@ -316,7 +318,7 @@ public class MastermindCombination extends Combination {
     }
 
     public List<List<Integer>> extract9(List<Integer> lst) {
-        List<List<Integer>> val = new ArrayList<>();
+        val = new ArrayList<>();
 
         for (int i1 = 0; i1 < lst.size(); i1++) {
             for (int i2 = i1 + 1; i2 < lst.size(); i2++) {
@@ -326,7 +328,7 @@ public class MastermindCombination extends Combination {
                             for (int i6 = i5 + 1; i6 < lst.size(); i6++) {
                                 for (int i7 = i6 + 1; i7 < lst.size(); i7++) {
                                     for (int i8 = i7 + 1; i8 <lst.size(); i8++) {
-                                        for (int i9 = i8 + 1; i9 < lst.size(); i9++) {
+                                        for (int i9 = i8 ; i9 < lst.size(); i9++) {
                                             List<Integer> add = new ArrayList<>();
                                             add.add(lst.get(i1));
                                             add.add(lst.get(i2));
