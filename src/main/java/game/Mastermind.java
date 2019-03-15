@@ -68,6 +68,7 @@ public  class   Mastermind extends Game {
         for (int i = 0; i < combinationMastermind.combinationList.size(); i++) {
             combinationMastermind.combinationAttacker.add(combinationMastermind.combinationList.get(i));
         }
+        System.out.println("Combinaison ordinateur " + combinationMastermind.combinationDefender);
         nbExtract =  combinationMastermind.valCommun()+ combinationMastermind.wrongPlace();
         switch (nbExtract) {
             case 1:

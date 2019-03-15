@@ -122,16 +122,19 @@ public class MastermindCombination extends Combination {
 
         combinationPossible = new ArrayList<int[]>();
         for (int i = 0; i < allCombination.size(); i++) {
-            for (int j = 0; j < allCombination.size(); j++) {
-                if (allCombination.get(i).equals(val.get(i))) {
-                    combinationPossible.add(allCombination.get(i));
-                    log.info("combinaison ajoutée " + Arrays.toString(combinationPossible.get(i)));
-                } else {
-                    allCombination.remove(i);
-                    log.info("combinaison supprimée " + Arrays.toString(allCombination.get(i)));
+            for (int j = 0; j < val.size(); j++) {
+                for (int k = 0; k < allCombination.get(i).length; k++) {
+                    for (int l = 0; l < val.get(j).size(); l++) {
+                        if (allCombination.get(i)[k] == (val.get(j).get(l))) {
+                            if (combinationPossible.contains(allCombination.get(i)) == false)
+                            combinationPossible.add(allCombination.get(i));
+                            log.info("combinaison ajoutée " + Arrays.toString(combinationPossible.get(i)));
+                        }
+                    }
                 }
             }
         }
+        allCombination = combinationPossible;
     }
 
     private void solve() {
