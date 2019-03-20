@@ -31,15 +31,15 @@ public  class   Mastermind extends Game {
         for (int i = 0; i < nbTry; i++) {
             count = count - 1;
             combinationMastermind.writeCombination();
-            combinationMastermind.combinationAttacker = new ArrayList<>();
+            /**combinationMastermind.combinationAttacker = new ArrayList<>();
             for (int j = 0; j < combinationMastermind.combinationList.size(); j++) {
                 combinationMastermind.combinationAttacker.add(combinationMastermind.combinationList.get(j));
-            }
+            }*/
             combinationMastermind.combinationDefender = new ArrayList<>();
             for (Integer a : combinationMastermind.combinationRandom) {
                 combinationMastermind.combinationDefender.add(a);
             }
-            nbExtract = combinationMastermind.arbitrage(combinationMastermind.combinationAttacker, combinationMastermind.combinationDefender) + combinationMastermind.arbitrage2(combinationMastermind.combinationAttacker, combinationMastermind.combinationDefender);
+            nbExtract = combinationMastermind.arbitrage(combinationMastermind.combinationList, combinationMastermind.combinationDefender) + combinationMastermind.arbitrage2(combinationMastermind.combinationAttacker, combinationMastermind.combinationDefender);
 
             if (nbExtract == combinationMastermind.combinationRandom.size()) {
                 log.info("Félicitations vous avez trouvé la bonne combinaison!!!");
@@ -146,6 +146,7 @@ public  class   Mastermind extends Game {
     public int versusMode() throws FileNotFoundException {
         log.info("Bienvenue dans le mode Versus de Mastermind!");
         gameMode = 3;
+        combinationMastermind.generateCombination();
         combinationMastermind.listCombination();
         combinationMastermind.combinationAttacker = new ArrayList<>();
         combinationMastermind.combinationDefender = new ArrayList<>();
@@ -160,7 +161,17 @@ public  class   Mastermind extends Game {
 
         for (int i = 0; i < nbTry; i++) {
 
-
+            log.info("A vous de jouer!");
+            combinationMastermind.writeCombination();
+            for (int j = 0; j < combinationMastermind.combinationRandom.size(); j++) {
+                combinationMastermind.combinationDefender.add(combinationMastermind.combinationRandom.get(j));
+            }
+            log.info("Joueur : ");
+            nbExtractAttacker = combinationMastermind.arbitrage(combinationMastermind.combinationList, combinationMastermind.combinationDefender) + combinationMastermind.arbitrage2(combinationMastermind.combinationAttacker, combinationMastermind.combinationDefender);
+            if (nbExtractAttacker == combinationMastermind.combinationRandom.size()) {
+                log.info("Vous avez trouvé la combinaison de l'ordinateur!!!");
+                return 2;
+            }
             System.out.println("Combinaison ordinateur " + combinationMastermind.allCombination.get(0));
             List<Integer> tmp = new ArrayList<>();/** Stock la combinaison de l'utilisateur et est utiliseé lors de la vérification des valeurs*/
             for (Integer a : combinationMastermind.combinationAttacker) {
@@ -170,10 +181,10 @@ public  class   Mastermind extends Game {
             for (Integer a : combinationMastermind.allCombination.get(0)) {
                 tampon.add(a);
             }
-
+            log.info("Ordinateur : ");
             nbExtractDefender =  combinationMastermind.arbitrage(tmp, tampon) + combinationMastermind.arbitrage2(tmp, tampon);
             if (nbExtractDefender == tampon.size()) {
-                System.out.println("l'ordinateur à trouvé votre combinaison!!!");
+                log.info("l'ordinateur à trouvé votre combinaison!!!");
                 return 2;
             }
             List<List<Integer>> tmp2 = new ArrayList<>();/** Stock les valeurs commnunes et mal placés des combinaisons*/

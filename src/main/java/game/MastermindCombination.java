@@ -141,7 +141,7 @@ public class MastermindCombination extends Combination {
                 proposition.set(i, -1);
             }
         }
-        log.info("L'ordinateur a " + count + " Valeurs communes!");
+        log.info("Il y a " + count + " Valeurs communes!");
         return count;
     }
 
@@ -157,7 +157,7 @@ public class MastermindCombination extends Combination {
                 }
             }
         }
-        log.info("L'ordinateur a " + count + " chiffres mal placés!");
+        log.info("Il y a " + count + " chiffres mal placés!");
         return count;
     }
 
@@ -170,7 +170,6 @@ public class MastermindCombination extends Combination {
             add.add(lst.get(i1));
             val.add(add);
         }
-        System.out.println(val);
         return val;
     }
 
@@ -186,7 +185,6 @@ public class MastermindCombination extends Combination {
                 val.add(add);
             }
         }
-        System.out.println(val);
         return val;
     }
 
@@ -204,7 +202,6 @@ public class MastermindCombination extends Combination {
                 }
             }
         }
-        System.out.println(val);
         return val;
     }
 
@@ -225,7 +222,6 @@ public class MastermindCombination extends Combination {
                 }
             }
         }
-        System.out.println(val);
         return val;
     }
 
