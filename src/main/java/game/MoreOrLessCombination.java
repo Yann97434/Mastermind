@@ -90,7 +90,6 @@ public class MoreOrLessCombination extends Combination {
                 } else combinationRandom.set(i, (combinationRandom.get(i)-nbMin)/2);
             }
         }
-        log.info(" -> Réponse : " + combinationResultDefender);
         return combinationRandom.equals(combinationList);
     }
 

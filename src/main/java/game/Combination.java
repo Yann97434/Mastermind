@@ -5,7 +5,6 @@ import org.apache.log4j.Logger;
 import utils.ReadConfigGame;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -20,8 +19,8 @@ public class Combination {
     protected ArrayList<Integer> combinationAttacker;
     protected ArrayList<Integer> combinationDefender;
     protected ArrayList<Integer> combinationExtract;
-    protected ArrayList<int[]> combinationPossible;
-    protected List<int[]> allCombination;
+    protected ArrayList<Integer> combinationPossible;
+    protected ArrayList<ArrayList<Integer>> allCombination;
 
     protected String combinationWrite;
     protected boolean result;
@@ -131,7 +130,7 @@ public class Combination {
                 combinationDefender.set(i, -1);
             }
         }
-        log.info("il y a " + count + " Valeurs communes!");
+        log.info("Vous avez " + count + " Valeurs communes!");
         return count;
     }
 
@@ -148,7 +147,7 @@ public class Combination {
                 }
             }
         }
-        log.info("il y a " + count + " chiffres mal placés!");
+        log.info("Vous avez " + count + " chiffres mal placés!");
         return count;
     }
 

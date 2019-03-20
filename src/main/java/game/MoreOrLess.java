@@ -10,7 +10,7 @@ public class MoreOrLess extends Game {
 
     private MoreOrLessCombination combinationMoreOrLess = new MoreOrLessCombination();
     final static Logger log = Logger.getLogger(MoreOrLess.class);
-
+    private int count;
     /**
      * Méthode challenger Mode of MoreOrLess Game
      */
@@ -21,14 +21,14 @@ public class MoreOrLess extends Game {
         gameMode = 1;
         combinationMoreOrLess.generateCombination();
 
-        for (int i = 0; i < 5 ; i++) {
-            nbTry = nbTry - 1;
+        count = nbTry;
+        for (int i = 0; i < nbTry; i++) {
+            count = count - 1;
             combinationMoreOrLess.writeCombination();
-            if (combinationMoreOrLess.analyseCombination(gameMode) == false) {
-                log.info("Veuillez réessayer, Il vous reste " + nbTry + " Essais!");
-            } else if (nbTry == 0) {
-                log.info("Dommage vous avez perdu!!! la réponse est : ");
-                combinationMoreOrLess.displayCombination();
+            if (count == 0) {
+                log.info("Dommage vous avez perdu!!! la réponse est : " + combinationMoreOrLess.combinationRandom);
+            } else if (combinationMoreOrLess.analyseCombination(gameMode) == false) {
+                log.info("Veuillez réessayer, Il vous reste " + count + " Essais!");
             } else {
                 log.info("Félicitations vous avez trouvé la bonne combinaison!!!");
                 break;
@@ -49,15 +49,18 @@ public class MoreOrLess extends Game {
         gameMode = 2;
         combinationMoreOrLess.writeCombination();
         combinationMoreOrLess.computerCombination();
-        for (int i = 0; i < 10 ; i++) {
-            nbTry = nbTry - 1;
+        count = nbTry;
+        for (int i = 0; i < nbTry; i++) {
+            count = count - 1;
             combinationMoreOrLess.analyseCombination(gameMode);
             combinationMoreOrLess.searchResult();
-            if (combinationMoreOrLess.analyseCombination(gameMode) == true) {
+            if (count == 0) {
+                log.info("Dommage vous avez perdu!!! la réponse est : " + combinationMoreOrLess.combinationList);
+            } else if (combinationMoreOrLess.searchResult() == false) {
+                log.info("Veuillez réessayer, Il vous reste " + count + " Essais!");
+            } else {
                 log.info("Félicitations vous avez trouvé la bonne combinaison!!!");
                 break;
-            } else {
-                log.info("Il vous reste " + nbTry + " essais!");
             }
         }
         return 2;
@@ -70,7 +73,7 @@ public class MoreOrLess extends Game {
     @Override
     public int versusMode() {
 
-        int turn = 0;
+
         gameMode = 3;
         combinationMoreOrLess.combinationAttacker = new ArrayList<>();
         combinationMoreOrLess.combinationDefender = new ArrayList<>();

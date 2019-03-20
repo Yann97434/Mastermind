@@ -31,26 +31,31 @@ public class MastermindCombination extends Combination {
 
     protected List<List<Integer>> val;
 
-    public List<int[]> listCombination() throws FileNotFoundException {
+    public ArrayList<ArrayList<Integer>> listCombination() throws FileNotFoundException {
 
         /**ArrayList<Integer> digitCombination = generateDigitCombination();*/
-        ReadConfigGame properties = new ReadConfigGame();
+
         int max = digitCombination;
+        int size;
+        int j = 1;
         allCombination = new ArrayList<>();
-        int sol[] = generateSolutionTab();
+        ArrayList<Integer> sol = generateSolutionTab();
         for (; end(sol);) {
-            sol[sol.length - 1] += 1;
-            if (sol[sol.length - 1] == max + 1)
+            size = sol.size() - 1;
+            sol.set(size, j++);
+            if (sol.get(sol.size() -1) == max + 1) {
                 sol = reaffect(sol);
+                j = 1;
+            }
             allCombination.add(bufferTab(sol));
-            /**System.out.println(Arrays.toString(sol));*/
+            /**System.out.println(sol);*/
 
         }
-        /**solve(allCombination); /**solve fonction permettant de faire la recherche du mastermind*/
+
         File file = new File("/Users/yannicknillama/Java/listNombre.txt");
         PrintWriter writer = new PrintWriter(file);
-        for (int[] str : allCombination) {
-            writer.println(str);
+        for (int i = 0; i < allCombination.size(); i++) {
+            writer.println(allCombination.get(i));
         }
         writer.close();
         return allCombination;
@@ -77,68 +82,83 @@ public class MastermindCombination extends Combination {
         return ret;
     }
 
-    private boolean end(int[] sol) {
+    private boolean end(ArrayList<Integer> sol) {
 
-        for (int i = 0; i < sol.length; i++) {
-            if (sol[i] != digitCombination)
+        for (int i = 0; i < sol.size(); i++) {
+            if (sol.get(i) != digitCombination)
                 return true;
         }
         return false;
     }
 
-    private int[] bufferTab(int[] sol) {
+    private ArrayList<Integer> bufferTab(ArrayList<Integer> sol) {
 
-        int[] copy = new int[sol.length];
-        for (int i = 0; i < sol.length; i++) {
-            copy[i] = sol[i];
+        ArrayList<Integer> copy = new ArrayList<>(sol.size());
+        for (int i = 0; i < sol.size(); i++) {
+            copy.add(sol.get(i));
         }
         return copy;
     }
 
-    private int[] reaffect(int[] sol) {
+    private ArrayList<Integer> reaffect(ArrayList<Integer> sol) {
 
-        for (int i = sol.length - 1; i > 0; i--) {
-            if (sol[i] == digitCombination + 1) {
-                sol[i] = 0;
-                sol[i - 1]++;
+        for (int i = sol.size() - 1; i > 0; i--) {
+            int j = sol.get(i - 1);
+            j++;
+            if (sol.get(i) == digitCombination + 1) {
+                sol.set(i, 0);
+                sol.set(i - 1, j);
             }
         }
 
         return sol;
     }
 
-    private int[] generateSolutionTab() {
+    private ArrayList<Integer> generateSolutionTab() {
 
-        int[] ret = new int[listSize];
+        ArrayList<Integer> ret = new ArrayList<>(listSize);
         for (int i = 0; i < listSize; i++) {
-            ret[i] = 0;
+            ret.add(0);
         }
 
         return ret;
     }
 
 
-    public void removeCombination() {
-
-        combinationPossible = new ArrayList<int[]>();
-        for (int i = 0; i < allCombination.size(); i++) {
-            for (int j = 0; j < val.size(); j++) {
-                for (int k = 0; k < allCombination.get(i).length; k++) {
-                    for (int l = 0; l < val.get(j).size(); l++) {
-                        if (allCombination.get(i)[k] == (val.get(j).get(l))) {
-                            if (combinationPossible.contains(allCombination.get(i)) == false)
-                            combinationPossible.add(allCombination.get(i));
-                            log.info("combinaison ajoutée " + Arrays.toString(combinationPossible.get(i)));
-                        }
-                    }
-                }
-            }
-        }
-        allCombination = combinationPossible;
-    }
 
     private void solve() {
 
+    }
+
+    public int arbitrage(List<Integer> combinationHuman, List<Integer> proposition) {
+
+
+        int count = 0;
+        for (int i = 0 ; i < combinationHuman.size() ; i++) {
+            if (combinationHuman.get(i) == proposition.get(i)) {
+                count++;
+                combinationHuman.set(i, -1);
+                proposition.set(i, -1);
+            }
+        }
+        log.info("L'ordinateur a " + count + " Valeurs communes!");
+        return count;
+    }
+
+    public int  arbitrage2(List<Integer> combinationHuman, List<Integer> proposition) {
+
+        int count = 0;
+        for (int i = 0; i < combinationHuman.size(); i++){
+            for (int j = 0; j < proposition.size(); j++){
+                if (combinationHuman.get(i) == proposition.get(j) && combinationHuman.get(i) != -1) {
+                    count++;
+                    combinationHuman.set(i, -1);
+                    proposition.set(j, -1);
+                }
+            }
+        }
+        log.info("L'ordinateur a " + count + " chiffres mal placés!");
+        return count;
     }
 
     public List<List<Integer>> extract1(List<Integer> lst) {
