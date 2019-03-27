@@ -1,8 +1,6 @@
 package game;
 
-
 import org.apache.log4j.Logger;
-
 import java.util.ArrayList;
 
 public class MoreOrLess extends Game {
@@ -12,7 +10,7 @@ public class MoreOrLess extends Game {
     final static Logger log = Logger.getLogger(MoreOrLess.class);
     private int count;
     /**
-     * Méthode challenger Mode of MoreOrLess Game
+     * Method challenger Mode of MoreOrLess Game
      */
     @Override
     public int challengerMode() {
@@ -20,11 +18,18 @@ public class MoreOrLess extends Game {
         log.info("Bienvenue dans le mode Challenger de MoreOrLess!");
         gameMode = 1;
         combinationMoreOrLess.generateCombination();
-
+        if (devMode == 1) {
+            combinationMoreOrLess.displayCombination();
+        }
         count = nbTry;
         for (int i = 0; i < nbTry; i++) {
             count = count - 1;
-            combinationMoreOrLess.writeCombination();
+            try {
+                combinationMoreOrLess.writeCombination();
+            } catch (Exception e) {
+                System.out.println("Votre combinaison n'est pas valide!!!");
+                combinationMoreOrLess.writeCombination();}
+
             if (count == 0) {
                 log.info("Dommage vous avez perdu!!! la réponse est : " + combinationMoreOrLess.combinationRandom);
             } else if (combinationMoreOrLess.analyseCombination(gameMode) == false) {
@@ -39,7 +44,7 @@ public class MoreOrLess extends Game {
 
 
     /**
-     * Méthode Defender Mode of MoreOrLess Game
+     * Method Defender Mode of MoreOrLess Game
      */
 
     @Override
@@ -47,7 +52,11 @@ public class MoreOrLess extends Game {
 
         log.info("Bienvenue dans le mode Defender de MoreOrLess!");
         gameMode = 2;
-        combinationMoreOrLess.writeCombination();
+        try {
+            combinationMoreOrLess.writeCombination();
+        } catch (Exception e) {
+            System.out.println("Votre combinaison n'est pas valide!!!");
+            combinationMoreOrLess.writeCombination();}
         combinationMoreOrLess.computerCombination();
         count = nbTry;
         for (int i = 0; i < nbTry; i++) {
@@ -67,7 +76,7 @@ public class MoreOrLess extends Game {
     }
 
     /**
-     * Méthode Versus Mode of MoreOrLess Game
+     * Method Versus Mode of MoreOrLess Game
      */
 
     @Override
@@ -79,11 +88,18 @@ public class MoreOrLess extends Game {
         combinationMoreOrLess.combinationDefender = new ArrayList<>();
         log.info("Bienvenue dans le mode Duel de MoreOrLess!");
         combinationMoreOrLess.generateCombination();
+        if (devMode == 1) {
+            combinationMoreOrLess.displayCombination();
+        }
         for (int i = 0; i < combinationMoreOrLess.combinationRandom.size(); i++) {
             combinationMoreOrLess.combinationDefender.add(combinationMoreOrLess.combinationRandom.get(i));
         }
         log.info("Veuillez entrer votre combinaison secrète!");
-        combinationMoreOrLess.writeCombination();
+        try {
+            combinationMoreOrLess.writeCombination();
+        } catch (Exception e) {
+            System.out.println("Votre combinaison n'est pas valide!!!");
+            combinationMoreOrLess.writeCombination();}
         for (int i = 0; i < combinationMoreOrLess.combinationList.size(); i++) {
             combinationMoreOrLess.combinationAttacker.add(combinationMoreOrLess.combinationList.get(i));
         }
@@ -91,7 +107,13 @@ public class MoreOrLess extends Game {
             log.info("A votre tour de jouer");
             combinationMoreOrLess.writeCombination();
             }
-        while (combinationMoreOrLess.combinationCompare() == false) ;
+        while (combinationMoreOrLess.combinationCompare() == 0);
+        if (combinationMoreOrLess.combinationCompare() == 1) {
+            log.info("Félicitations vous avez gagné!!!");
+        }else {
+            log.info("L'ordinateur à gagné!!!");
+        }
+
         return 3;
     }
 

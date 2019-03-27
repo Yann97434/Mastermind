@@ -1,9 +1,7 @@
 import game.Game;
-/**import game.Mastermind;*/
 import game.Mastermind;
 import game.MoreOrLess;
 import org.apache.log4j.Logger;
-
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -16,14 +14,14 @@ public class Menu {
     final static Logger log = Logger.getLogger(Menu.class);
 
     /**
-     * Méthode permettant d'afficher le menu
+     * Method for displaying the menu
      */
 
     public void displayMenu() {
 
         try {
 
-            log.info("Choix menu");
+            log.info("Menu");
             log.info("1 - Selectionner un jeux");
             log.info("2 - Rejouer");
             log.info("3 - Quitter");
@@ -49,7 +47,7 @@ public class Menu {
     }
 
     /**
-     * Méthode permettant de choisir le jeu
+     * Method to choose the game
      */
 
     public void choiceGame() throws IOException {
@@ -83,7 +81,9 @@ public class Menu {
 
     }
 
-
+    /**
+     * Method to replay a game
+     */
     public void replay() {
         MoreOrLess game = new MoreOrLess();
         if (mode == 1) {
@@ -95,6 +95,9 @@ public class Menu {
         }
     }
 
+    /**
+     * Method to quit the game
+     */
     public void quit() {
         log.info("Merci d'avoir joué!!!");
     }

@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -31,9 +30,14 @@ public class MastermindCombination extends Combination {
 
     protected List<List<Integer>> val;
 
+
+    /**
+     * Method to generate all possible combinations
+     * @return allCombination
+     * @throws FileNotFoundException
+     */
     public ArrayList<ArrayList<Integer>> listCombination() throws FileNotFoundException {
 
-        /**ArrayList<Integer> digitCombination = generateDigitCombination();*/
 
         int max = digitCombination;
         int size;
@@ -61,25 +65,6 @@ public class MastermindCombination extends Combination {
         return allCombination;
 
 
-    }
-
-    private ArrayList<Integer> generateDigitCombination() {
-
-        ArrayList<Integer> ret = new ArrayList<>(digitCombination);
-
-        for (int i = 0; i < digitCombination; i++) {
-            ret.add(i) ;
-        }
-        return ret;
-    }
-
-    private ArrayList<Integer> sizeCombination() {
-
-        ArrayList<Integer> ret = new ArrayList<>(listSize);
-        for (int i = 0; i < listSize; i++) {
-            ret.add(i) ;
-        }
-        return ret;
     }
 
     private boolean end(ArrayList<Integer> sol) {
@@ -124,12 +109,12 @@ public class MastermindCombination extends Combination {
         return ret;
     }
 
-
-
-    private void solve() {
-
-    }
-
+    /**
+     * Method to know the number of common values
+     * @param combinationHuman
+     * @param proposition
+     * @return the number of common values
+     */
     public int arbitrage(List<Integer> combinationHuman, List<Integer> proposition) {
 
 
@@ -145,6 +130,13 @@ public class MastermindCombination extends Combination {
         return count;
     }
 
+
+    /**
+     * Method to know the number of misplaced values
+     * @param combinationHuman
+     * @param proposition
+     * @return the number of misplaced values
+     */
     public int  arbitrage2(List<Integer> combinationHuman, List<Integer> proposition) {
 
         int count = 0;
@@ -161,6 +153,69 @@ public class MastermindCombination extends Combination {
         return count;
     }
 
+    /**
+     * Method for testing combinations
+     * @param possibleSolution
+     * @param tuple
+     * @param size
+     * @return possibleCombination
+     */
+    public ArrayList<ArrayList<Integer>> removeCombination(ArrayList<ArrayList<Integer>> possibleSolution, List<List<Integer>> tuple, int size) {
+
+        ArrayList<ArrayList<Integer>> tmp = new ArrayList<>();
+        possibleSolution.remove(0);
+        for (int i = 0; i < possibleSolution.size(); i++) {
+            int count = 0;
+            List<Integer> tmp2 = new ArrayList<>();
+            for (int j = 0; j < possibleSolution.get(i).size(); j++) {
+                tmp2.add(possibleSolution.get(i).get(j));
+            }
+            for (List<Integer> j : tuple) {
+                for (Integer l : j) {
+                    for (int k = 0; k < tmp2.size(); k++) {
+                        if (l == tmp2.get(k)) {
+                            count++;
+                            tmp2.set(k, -1);
+                        }
+                    }
+                }
+            }
+            if (count >= size && !tmp.contains(possibleSolution.get(i))) {
+                tmp.add(possibleSolution.get(i));
+            }
+        }
+        return tmp;
+    }
+
+    /**
+     * How to remove unnecessary combinations
+     * @param combinationAttacker
+     * @return possibleCombination
+     */
+    public ArrayList<ArrayList<Integer>> removeUseless(ArrayList<Integer> combinationAttacker) {
+
+        ArrayList<ArrayList<Integer>> tmp = new ArrayList<>();
+        for (int i = 0; i < allCombination.size(); i++) {
+            boolean flag = true;
+            for (int j = 0; j < allCombination.get(i).size(); j++) {
+                for (int k = 0; k < combinationAttacker.size(); k++) {
+                    if (combinationAttacker.get(j) == allCombination.get(i).get(j)) {
+                        flag = false;
+                    }
+                }
+            }
+            if (flag) {
+                tmp.add(allCombination.get(i));
+            }
+        }
+        return tmp;
+    }
+
+    /**
+     * How to create possible combinations of common or misplaced values
+     * @param lst
+     * @return possibleCombination of common or misplaced values
+     */
     public List<List<Integer>> extract1(List<Integer> lst) {
         val = new ArrayList<>();
 

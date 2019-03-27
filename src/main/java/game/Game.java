@@ -8,35 +8,30 @@ import java.util.Scanner;
 
 public abstract class Game {
 
-    public int getGameMode() {
-        return gameMode;
-    }
 
-    public void setGameMode(int gameMode) {
-        this.gameMode = gameMode;
-    }
-
-    protected int size;
     protected int gameMode;
     protected int nbTry;
+    protected int devMode;
     Scanner sc = new Scanner(System.in);
     final static Logger log = Logger.getLogger(Game.class);
+
 
     public Game() {
         super();
         ReadConfigGame properties = new ReadConfigGame();
         nbTry = Integer.parseInt(properties.getNbTry());
+        devMode = properties.getDevMode();
     }
 
 
     /**
-     * Méthode permettant de choisir le mode de jeu
+     * Method for choosing the game mode
      * @return
      */
 
-    public int choiceMode() throws IOException {
+    public int choiceMode() {
 
-
+        try {
         log.info("Veuillez choisir un mode de jeu!");
         log.info("1 - Attaquant");
         log.info("2 - Défenseur");
@@ -44,19 +39,22 @@ public abstract class Game {
 
         gameMode = sc.nextInt();
 
-        switch (gameMode) {
-            case 1:
-                challengerMode();
-                break;
-            case 2:
-                defenderMode();
-                break;
-            case 3:
-                versusMode();
-                break;
-            default:
-                log.info("Vous n'avez pas choisi une proposition de la liste");
-        }
+
+            switch (gameMode) {
+                case 1:
+                    challengerMode();
+                    break;
+                case 2:
+                    defenderMode();
+                    break;
+                case 3:
+                    versusMode();
+                    break;
+                default:
+                    log.info("Vous n'avez pas choisi une proposition de la liste");
+            }
+        } catch (Exception e) {return choiceMode();}
+
 
         return gameMode;
 

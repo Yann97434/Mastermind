@@ -1,8 +1,6 @@
 package game;
 
-import game.Game;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -21,15 +19,13 @@ public class MoreOrLessCombination extends Combination {
 
 
     /**
-     * Méthode permettant de chercher la combinaison dans le mode challenger et defender de MoreOrLess
-     * @return combination equals
+     * Method to search the combination in the challenger and defender mode of MoreOrLess
+     * @return true if combiantionRandom == combinationList
      */
 
     public boolean analyseCombination(int gameMode) {
 
         result = false;
-        /**combinationAttacker = new ArrayList<>();
-        combinationDefender = new ArrayList<>();*/
         combinationResultAttacker = new ArrayList<>();
         combinationResultDefender = new ArrayList<>();
 
@@ -65,8 +61,8 @@ public class MoreOrLessCombination extends Combination {
     }
 
     /**
-     * Methode permetttant à l'ordinateur de réfléchir comme un humain dans le challenger du MoreOrLess
-     * @return combination equals
+     * Method allowing the computer to think like a human in the challenger mode of MoreOrLess
+     * @return true if combiantionRandom == combinationList
      */
 
     public boolean searchResult() {
@@ -95,12 +91,10 @@ public class MoreOrLessCombination extends Combination {
 
     /**
      * Méthode permettant de comparer les combinaisons du joueur et de l'ordinateur dans le mode Versus de MoreOrLess
-     * @return combination equals
+     * @return an int depending on the result
      */
-    public boolean combinationCompare(){
+    public int combinationCompare(){
 
-        /**combinationAttacker = new ArrayList<>();
-        combinationDefender = new ArrayList<>();*/
         combinationResultAttacker = new ArrayList<>();
         combinationResultDefender = new ArrayList<>();
 
@@ -113,6 +107,9 @@ public class MoreOrLessCombination extends Combination {
                 combinationResultAttacker.add("+");
             }
         }
+        if (isWin(combinationResultAttacker)) {
+            return 1;
+        }
 
         for (int i = 0; i < combinationRandom.size(); i++) {
             if (combinationRandom.get(i) == combinationAttacker.get(i)) {
@@ -122,6 +119,9 @@ public class MoreOrLessCombination extends Combination {
             } else {
                 combinationResultDefender.add("-");
             }
+        }
+        if (isWin(combinationResultDefender)) {
+            return 2;
         }
 
         log.info(" -> Réponse Ordinateur : " + combinationResultAttacker);
@@ -147,6 +147,23 @@ public class MoreOrLessCombination extends Combination {
             }
         }
 
-        return combinationRandom.equals(combinationAttacker) || combinationList.equals(combinationDefender);
+        return 0;
+    }
+
+    /**
+     * Méthode permettant de retourner une valeur pour le vainqueur
+     * @param l is combonationResult of attacker or defender
+     * @return true if the combinationResult equals "="
+     */
+    private boolean isWin (List<String> l ) {
+
+        for (String s : l) {
+            if (s.equals("+") || s.equals("-")) {
+                return false;
+            }
+        }
+        return true;
     }
 }
+
+

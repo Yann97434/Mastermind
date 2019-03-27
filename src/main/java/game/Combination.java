@@ -3,7 +3,6 @@ package game;
 
 import org.apache.log4j.Logger;
 import utils.ReadConfigGame;
-
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -18,8 +17,6 @@ public class Combination {
     protected ArrayList<String> combinationResultDefender;
     protected ArrayList<Integer> combinationAttacker;
     protected ArrayList<Integer> combinationDefender;
-    protected ArrayList<Integer> combinationExtract;
-    protected ArrayList<Integer> combinationPossible;
     protected ArrayList<ArrayList<Integer>> allCombination;
 
     protected String combinationWrite;
@@ -31,8 +28,6 @@ public class Combination {
 
     final static Logger log = Logger.getLogger(Combination.class);
 
-
-    /**public Combination() {}*/
 
     public Combination() {
         super();
@@ -66,7 +61,7 @@ public class Combination {
     public ArrayList<Integer> getCombinationDefender() { return combinationDefender; }
 
     /**
-     * Méthode permettant au joueur d'écrire sa combinaison
+     * Method allowing the player to write his combination
      */
 
     public void writeCombination() {
@@ -75,7 +70,6 @@ public class Combination {
         Scanner sc = new Scanner(System.in);
         combinationWrite = sc.next();
         combinationList = new ArrayList<>();
-        /**combinationAttacker = new ArrayList<>();*/
         for (int i = 0; i < listSize; i++) {
             String tmp = "" + combinationWrite.charAt(i);
             combinationList.add(Integer.parseInt(tmp));
@@ -85,70 +79,36 @@ public class Combination {
     }
 
     /**
-     * Méthode permettant à l'ordinateur de générer une combinaison aléatoire
+     * Method that allows the computer to generate a random combination
      */
 
     public void generateCombination() {
         combinationRandom = new ArrayList<>();
-        /**combinationDefender = new ArrayList<>();*/
         for (int i = 0; i < listSize; i++) {
-            combinationRandom.add(rand.nextInt(digitCombination - 1 + 1) + 1);
+            combinationRandom.add(rand.nextInt(digitCombination ) + 1);
         }
     }
 
     /**
-     * Méthode pour la combinaison de départ de l'ordinateur lors de la recherche dans le mode Defender et Duel du MoreOrLess
+     * Method for Starting Combination of the Computer When Searching in the MoreOrLess Defender and Duel Mode
      */
 
     public void computerCombination() {
 
         combinationRandom = new ArrayList<>();
         for (int i = 0; i < listSize; i++) {
-            combinationRandom.add(5);
+            combinationRandom.add(digitCombination / 2);
         }
 
     }
 
     /**
-     * Méthode qui affiche la combinaison aléatoire de l'ordinateur
+     * Method that displays the random combination of the computer
      */
 
     public void displayCombination() {
 
-        log.info("Voici la liste complète des nombres aléatoire " + combinationRandom);
-    }
-
-    public int valCommun(/**ArrayList<Integer> combinationAttacker, ArrayList<Integer> combinationDefender*/) {
-
-        combinationExtract = new ArrayList<>();
-        int count = 0;
-        for (int i = 0 ; i < combinationAttacker.size() ; i++) {
-            if (combinationAttacker.get(i) == combinationDefender.get(i)) {
-                count++;
-                combinationExtract.add(combinationAttacker.get(i));
-                combinationAttacker.set(i, -1);
-                combinationDefender.set(i, -1);
-            }
-        }
-        log.info("Vous avez " + count + " Valeurs communes!");
-        return count;
-    }
-
-    public int  wrongPlace(/**ArrayList<Integer> combinationAttacker, ArrayList<Integer> combinationDefender*/) {
-
-        int count = 0;
-        for (int i = 0; i < combinationAttacker.size(); i++){
-            for (int j = 0; j < combinationDefender.size(); j++){
-                if (combinationAttacker.get(i) == combinationDefender.get(j) && combinationAttacker.get(i) != -1) {
-                    count++;
-                    combinationExtract.add(combinationAttacker.get(i));
-                    combinationAttacker.set(i, -1);
-                    combinationDefender.set(j, -1);
-                }
-            }
-        }
-        log.info("Vous avez " + count + " chiffres mal placés!");
-        return count;
+        log.info("Voici la combinaison secrète de l'ordinateur " + combinationRandom);
     }
 
 }
